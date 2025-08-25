@@ -1,5 +1,5 @@
 # _
 
 Home :
-https://raw.githack.com/vieralola/MediaPayment/main/MediaPayment.html
+https://raw.githubusercontent.com/Langzyy999/MediaPayment/main/MediaPayment.html
 
