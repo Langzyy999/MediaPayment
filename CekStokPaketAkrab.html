@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cek Stok Kouta</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+
+  <div class="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md space-y-4">
+
+    <h1 class="text-2xl font-bold text-blue-600 text-center">📦 Cek Stok Kouta</h1>
+
+     Peringatan Order 
+    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded">
+      <b>akrab bekasan, restok tiap hari jam 15.00 WIB</b>
+    </div>
+    
+
+    <!-- Tombol cek stok -->
+    <button
+      onclick="fetchStock()"
+      class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+      🔍 Cek Stok
+    </button>
+
+    <!-- Loader -->
+    <div id="loader" class="text-center text-gray-500 hidden">🔄 Mengambil data...</div>
+
+    <!-- Hasil -->
+    <pre id="result" class="hidden whitespace-pre-wrap bg-blue-50 border border-blue-200 rounded-lg p-4 text-blue-800 font-medium"></pre>
+
+    <!-- Error -->
+    <div id="error" class="hidden bg-red-50 border border-red-200 rounded-lg p-4 text-red-800 font-medium"></div>
+
+  </div>
+
+  <script>
+    async function fetchStock() {
+      const loader = document.getElementById('loader');
+      const result = document.getElementById('result');
+      const error = document.getElementById('error');
+
+      // Reset tampilan
+      loader.classList.remove('hidden');
+      result.classList.add('hidden');
+      error.classList.add('hidden');
+
+      try {
+        const res = await fetch('https://xlstock.serversaya.site/api/api-xl-v7/cek_stock_akrab');
+        const data = await res.json();
+
+        loader.classList.add('hidden');
+
+        if (data.message) {
+          result.textContent = data.message;
+          result.classList.remove('hidden');
+        } else {
+          error.textContent = '⚠️ Gagal memuat data stok.';
+          error.classList.remove('hidden');
+        }
+      } catch (err) {
+        loader.classList.add('hidden');
+        error.textContent = '❌ Gagal menghubungi server.';
+        error.classList.remove('hidden');
+      }
+    }
+  </script>
+
+</body>
+</html>
